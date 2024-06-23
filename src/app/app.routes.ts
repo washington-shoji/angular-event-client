@@ -4,6 +4,7 @@ import { RegisterComponent } from './pages/auth/register/register.component';
 import { PublicLayoutScreenComponent } from './components/public-layout-screen/public-layout-screen.component';
 import { AdminLayoutScreenComponent } from './components/admin-layout-screen/admin-layout-screen.component';
 import { PublicEventPageComponent } from './pages/public-event-page/public-event-page.component';
+import { AdminDashboardComponent } from './pages/admin/admin-dashboard/admin-dashboard.component';
 
 export const routes: Routes = [
   {
@@ -20,6 +21,9 @@ export const routes: Routes = [
     path: 'admin',
     pathMatch: 'full',
     component: AdminLayoutScreenComponent,
-    children: [],
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+      { path: 'dashboard', component: AdminDashboardComponent },
+    ],
   },
 ];
