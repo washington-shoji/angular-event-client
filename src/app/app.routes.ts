@@ -29,17 +29,12 @@ export const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
       { path: 'dashboard', component: AdminDashboardComponent },
-      {
-        path: 'admin-events',
-        component: AdminEventsComponent,
-        children: [
-          { path: 'create/:id', component: CreateEventDialogComponent },
-          { path: 'update/:id', component: UpdateEventDialogComponent },
-          { path: 'delete/:id', component: DeleteEventDialogComponent },
-        ],
-      },
-      { path: 'admin-profile', component: AdminProfileComponent },
-      { path: 'admin-experimental', component: AdminExperimentalComponent },
+      { path: 'events', component: AdminEventsComponent },
+      { path: 'create', component: CreateEventDialogComponent },
+      { path: 'update/:id', component: UpdateEventDialogComponent },
+      { path: 'delete/:id', component: DeleteEventDialogComponent },
+      { path: 'profile', component: AdminProfileComponent },
+      { path: 'experimental', component: AdminExperimentalComponent },
     ],
   },
 ];
