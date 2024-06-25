@@ -2,18 +2,27 @@ import { Component } from '@angular/core';
 import { TableFooterComponent } from '../table-footer/table-footer.component';
 import { TableHeaderComponent } from '../table-header/table-header.component';
 import { TableBodyComponent } from '../table-body/table-body.component';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [TableHeaderComponent, TableBodyComponent, TableFooterComponent],
+  imports: [
+    RouterOutlet,
+    TableHeaderComponent,
+    TableBodyComponent,
+    TableFooterComponent,
+  ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })
 export class TableComponent {
-  addEvent: boolean = false;
+  eventAction: boolean = false;
+
+  constructor(private router: Router) {}
 
   onAddEvent($event: boolean): void {
-    this.addEvent = $event;
+    this.eventAction = $event;
+    this.router.navigate(['admin', 'create']);
   }
 }
