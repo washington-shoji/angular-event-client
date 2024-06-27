@@ -1,5 +1,5 @@
 export interface AppEvent {
-  id: string;
+  id?: string;
   title: string;
   description: string;
   start_time: string;
