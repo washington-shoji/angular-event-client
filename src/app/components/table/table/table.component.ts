@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { TableFooterComponent } from '../table-footer/table-footer.component';
 import { TableHeaderComponent } from '../table-header/table-header.component';
 import { TableBodyComponent } from '../table-body/table-body.component';
 import { Router, RouterOutlet } from '@angular/router';
+import { AppEvent } from '../../../pages/public-event-page/event.type';
 
 @Component({
   selector: 'app-table',
@@ -17,6 +18,7 @@ import { Router, RouterOutlet } from '@angular/router';
   styleUrl: './table.component.scss',
 })
 export class TableComponent {
+  events = input.required<AppEvent[]>();
   eventAction: boolean = false;
 
   constructor(private router: Router) {}
