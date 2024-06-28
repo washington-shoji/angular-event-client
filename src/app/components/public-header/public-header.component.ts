@@ -20,6 +20,5 @@ export class PublicHeaderComponent {
 
   toggleOpenMenu(): void {
     this.menuOpen = !this.menuOpen;
-    console.warn('this.menuOpen', this.menuOpen);
   }
 }
