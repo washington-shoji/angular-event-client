@@ -2,13 +2,14 @@ import { Component, input } from '@angular/core';
 import { AppEvent } from '../../../pages/public-event-page/event.type';
 import { Router } from '@angular/router';
 import { AdminEventService } from '../../../pages/admin/services/admin-event.service';
+import { DatePipe } from '@angular/common';
 
 type Action = 'DELETE' | 'UPDATE' | 'VIEW';
 
 @Component({
   selector: 'app-table-body',
   standalone: true,
-  imports: [],
+  imports: [DatePipe],
   providers: [AdminEventService],
   templateUrl: './table-body.component.html',
   styleUrl: './table-body.component.scss',
