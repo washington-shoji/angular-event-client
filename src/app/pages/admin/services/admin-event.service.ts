@@ -13,7 +13,15 @@ export class AdminEventService {
     return this.http.post<AppEvent>(this.URL, payload);
   }
 
+  updateEvent(id: string, payload: AppEvent): Observable<AppEvent> {
+    return this.http.put<AppEvent>(`${this.URL}/${id}`, payload);
+  }
+
   getEvents(): Observable<AppEvent[]> {
     return this.http.get<AppEvent[]>(this.URL);
+  }
+
+  deleteEvent(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.URL}/${id}`);
   }
 }
