@@ -11,6 +11,7 @@ import { AdminExperimentalComponent } from './pages/admin/admin-experimental/adm
 import { CreateEventComponent } from './components/dialog/create-event/create-event.component';
 import { UpdateEventComponent } from './components/dialog/update-event/update-event.component';
 import { DeleteEventComponent } from './components/dialog/delete-event/delete-event.component';
+import { ViewEventComponent } from './components/dialog/view-event/view-event.component';
 
 export const routes: Routes = [
   {
@@ -30,6 +31,7 @@ export const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
       { path: 'dashboard', component: AdminDashboardComponent },
       { path: 'events', component: AdminEventsComponent },
+      { path: 'view', component: ViewEventComponent },
       { path: 'create', component: CreateEventComponent },
       { path: 'update', component: UpdateEventComponent },
       { path: 'delete', component: DeleteEventComponent },
