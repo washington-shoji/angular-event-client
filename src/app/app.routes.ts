@@ -12,6 +12,7 @@ import { CreateEventComponent } from './components/dialog/create-event/create-ev
 import { UpdateEventComponent } from './components/dialog/update-event/update-event.component';
 import { DeleteEventComponent } from './components/dialog/delete-event/delete-event.component';
 import { ViewEventComponent } from './components/dialog/view-event/view-event.component';
+import { adminGuard } from './guards/admin-guard/admin.guard';
 
 export const routes: Routes = [
   {
@@ -26,7 +27,12 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   {
     path: 'admin',
-    component: AdminLayoutScreenComponent,
+
+    loadComponent: () =>
+      import(
+        './components/admin-layout-screen/admin-layout-screen.component'
+      ).then((m) => m.AdminLayoutScreenComponent),
+    canActivate: [adminGuard],
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
       { path: 'dashboard', component: AdminDashboardComponent },
