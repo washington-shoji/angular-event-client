@@ -7,21 +7,21 @@ import { AppEvent } from '../../public-event-page/event.type';
 export class AdminEventService {
   constructor(private http: HttpClient) {}
 
-  private URL: string = 'http://localhost:3000/api/v1/events';
+  private URL: string = 'http://localhost:3000/api/v1';
 
   createEvents(payload: AppEvent): Observable<AppEvent> {
-    return this.http.post<AppEvent>(this.URL, payload);
+    return this.http.post<AppEvent>(`${this.URL}/events`, payload);
   }
 
   updateEvent(id: string, payload: AppEvent): Observable<AppEvent> {
-    return this.http.put<AppEvent>(`${this.URL}/${id}`, payload);
+    return this.http.put<AppEvent>(`${this.URL}/events/${id}`, payload);
   }
 
-  getEvents(): Observable<AppEvent[]> {
-    return this.http.get<AppEvent[]>(this.URL);
+  getUserEvents(): Observable<AppEvent[]> {
+    return this.http.get<AppEvent[]>(`${this.URL}/user-events`);
   }
 
   deleteEvent(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.URL}/${id}`);
+    return this.http.delete<void>(`${this.URL}/events/${id}`);
   }
 }

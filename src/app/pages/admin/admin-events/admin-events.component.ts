@@ -25,7 +25,7 @@ export class AdminEventsComponent implements OnInit {
   getEventsInit(): void {
     this.loading = true;
     this.adminEventService
-      .getEvents()
+      .getUserEvents()
       .pipe(take(1))
       .subscribe({
         next: (data) => {
