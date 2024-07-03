@@ -44,6 +44,8 @@ export class LoginComponent implements OnInit {
   }
 
   submit(): void {
+    if (!this.loginFrm.valid) return;
+
     this.submitting = true;
     const formValue = this.loginFrm.value;
     this.authService
