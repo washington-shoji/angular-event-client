@@ -20,7 +20,7 @@ import { ErrorAlertComponent } from '../../../components/error-alert/error-alert
   styleUrl: './register.component.scss',
 })
 export class RegisterComponent implements OnInit {
-  loginFrm: FormGroup;
+  registerFrm: FormGroup;
   submitting: boolean = false;
   errorMessage: string | undefined = undefined;
 
@@ -29,11 +29,11 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private authService: AuthService
   ) {
-    this.loginFrm = new FormGroup({});
+    this.registerFrm = new FormGroup({});
   }
 
   ngOnInit(): void {
-    this.loginFrm = this.formBuilder.group({
+    this.registerFrm = this.formBuilder.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
@@ -45,14 +45,15 @@ export class RegisterComponent implements OnInit {
   }
 
   submit(): void {
+    if (!this.registerFrm.valid) return;
     this.submitting = true;
-    const formValue = this.loginFrm.value;
+    const formValue = this.registerFrm.value;
     this.authService
-      .login(formValue)
+      .register(formValue)
       .pipe(take(1))
       .subscribe({
         next: (response) => {
-          this.router.navigate(['admin']);
+          this.router.navigate(['login']);
         },
         error: (error) => {
           this.submitting = false;
@@ -71,7 +72,7 @@ export class RegisterComponent implements OnInit {
   }
 
   get loginForm(): FormGroup {
-    return this.loginFrm;
+    return this.registerFrm;
   }
 
   get usernameControl(): FormControl {
