@@ -7,7 +7,7 @@ import { AppEvent } from './event.type';
 export class PublicEventService {
   constructor(private http: HttpClient) {}
 
-  URL: string = 'http://localhost:3000/api/v1/events';
+  URL: string = 'http://localhost:3000/api/v1/public-events';
 
   getAllPublicEvents(): Observable<AppEvent[]> {
     return this.http.get<AppEvent[]>(this.URL);
