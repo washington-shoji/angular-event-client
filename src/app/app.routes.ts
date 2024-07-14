@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { RegisterComponent } from './pages/auth/register/register.component';
 import { PublicLayoutScreenComponent } from './components/public-layout-screen/public-layout-screen.component';
-import { AdminLayoutScreenComponent } from './components/admin-layout-screen/admin-layout-screen.component';
 import { PublicEventPageComponent } from './pages/public-event-page/public-event-page.component';
 import { AdminDashboardComponent } from './pages/admin/admin-dashboard/admin-dashboard.component';
 import { AdminEventsComponent } from './pages/admin/admin-events/admin-events.component';
@@ -13,6 +12,8 @@ import { UpdateEventComponent } from './components/dialog/update-event/update-ev
 import { DeleteEventComponent } from './components/dialog/delete-event/delete-event.component';
 import { ViewEventComponent } from './components/dialog/view-event/view-event.component';
 import { adminGuard } from './guards/admin-guard/admin.guard';
+import { AdminAllEventsComponent } from './pages/admin/pages/all-events/all-events.component';
+import { EventRegistrationComponent } from './components/event-registration/event-registration.component';
 
 export const routes: Routes = [
   {
@@ -36,6 +37,8 @@ export const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
       { path: 'dashboard', component: AdminDashboardComponent },
+      { path: 'all-events', component: AdminAllEventsComponent },
+      { path: 'registration', component: EventRegistrationComponent },
       { path: 'events', component: AdminEventsComponent },
       { path: 'view', component: ViewEventComponent },
       { path: 'create', component: CreateEventComponent },
