@@ -12,6 +12,9 @@ import { Subscription, take } from 'rxjs';
 import { AdminEventService } from '../../../pages/admin/services/admin-event.service';
 import { AppEvent } from '../../../pages/public-event-page/event.type';
 import { ErrorAlertComponent } from '../../error-alert/error-alert.component';
+import { AddressFormComponent } from '../../form/address-form/address-form.component';
+import { EventAddress } from '../../../types/event-address';
+import { AdminEventAddressService } from '../../../pages/admin/services/admin-event-address.service';
 
 type RouteState = {
   event: AppEvent;
@@ -21,14 +24,20 @@ type RouteState = {
 @Component({
   selector: 'app-update-event',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ErrorAlertComponent],
-  providers: [AdminEventService],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ErrorAlertComponent,
+    AddressFormComponent,
+  ],
+  providers: [AdminEventService, AdminEventAddressService],
   templateUrl: './update-event.component.html',
   styleUrl: './update-event.component.scss',
 })
 export class UpdateEventComponent implements OnInit, OnDestroy {
   private _subscription: Subscription;
   event: AppEvent | undefined;
+  eventAddress!: EventAddress;
   eventFrm: FormGroup;
   submitting: boolean = false;
   errorMessage: string | undefined = undefined;
@@ -36,7 +45,8 @@ export class UpdateEventComponent implements OnInit, OnDestroy {
     private router: Router,
     private location: Location,
     private formBuilder: FormBuilder,
-    private adminEventService: AdminEventService
+    private adminEventService: AdminEventService,
+    private adminEventAddressService: AdminEventAddressService
   ) {
     this._subscription = new Subscription();
     this.eventFrm = new FormGroup({});
@@ -44,6 +54,7 @@ export class UpdateEventComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.eventInit();
+    this.eventAddressInit();
   }
 
   ngOnDestroy(): void {
@@ -70,6 +81,27 @@ export class UpdateEventComponent implements OnInit, OnDestroy {
     });
   }
 
+  eventAddressInit(): void {
+    if (this.event?.id) {
+      this.adminEventAddressService
+        .findEventAddressByEventId(this.event.id)
+        .pipe(take(1))
+        .subscribe({
+          next: (response) => {
+            this.eventAddress = response;
+            //this.router.navigate(['admin', 'events']);
+          },
+          error: (error) => {
+            this.submitting = false;
+            this.errorMessage = error.errorMessage;
+          },
+          complete: () => {
+            this.submitting = false;
+          },
+        });
+    }
+  }
+
   dismiss(): void {
     this.router.navigate(['admin', 'events']);
   }
@@ -91,7 +123,6 @@ export class UpdateEventComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe({
         next: (response) => {
-          console.warn('update response', response);
           this.router.navigate(['admin', 'events']);
         },
         error: (error) => {
@@ -102,6 +133,26 @@ export class UpdateEventComponent implements OnInit, OnDestroy {
           this.submitting = false;
         },
       });
+  }
+
+  submitAddress($event: FormGroup): void {
+    if ($event.valid && this.event?.id) {
+      this.adminEventAddressService
+        .createEventAddress(this.event?.id, $event.value)
+        .pipe(take(1))
+        .subscribe({
+          next: (response) => {
+            //this.router.navigate(['admin', 'events']);
+          },
+          error: (error) => {
+            this.submitting = false;
+            this.errorMessage = error.errorMessage;
+          },
+          complete: () => {
+            this.submitting = false;
+          },
+        });
+    }
   }
 
   get eventForm(): FormGroup {

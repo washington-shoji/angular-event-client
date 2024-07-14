@@ -80,4 +80,12 @@
     <app-error-alert [errorMessage]="errorMessage" (dismissClick)="dismissError($event)"></app-error-alert>
     }
 
+    @if(event?.location === 'Venue' && this.eventAddress) {
+    <div class="py-4 px-4 mx-auto max-w-2xl">
+        <app-address-form [eventAddress]="eventAddress" [submitting]="submitting"
+            (addressFrmData)="submitAddress($event)">
+        </app-address-form>
+    </div>
+    }
+
 </section>
