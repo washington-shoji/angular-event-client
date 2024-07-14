@@ -1,0 +1,29 @@
+<section class="min-h-screen bg-white dark:bg-gray-900">
+    <div class="py-24 px-4 mx-auto max-w-screen-xl lg:px-6">
+        <div class="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
+            <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Gallery of
+                All Events
+            </h2>
+            <p class="font-light text-gray-500 sm:text-xl dark:text-gray-400">
+                Feel free to join any of the open for registration events.
+            </p>
+        </div>
+
+        @if (loading) {
+        <div class="flex justify-center">
+            <app-loading-indicator></app-loading-indicator>
+        </div>
+        }
+
+        @if (errorMessage && !loading) {
+        <app-error-alert [errorMessage]="errorMessage" (dismissClick)="setErrorDismissed($event)"></app-error-alert>
+        }
+
+        <div class="grid gap-8 lg:grid-cols-2">
+            @for (event of events; track $index) {
+            <app-private-event-card [event]="event" (navigated)="navigateToRegistration($event)">
+            </app-private-event-card>
+            }
+        </div>
+    </div>
+</section>
