@@ -23,7 +23,6 @@ export class AdminAllEventsComponent {
   events: AppEvent[] = [];
   loading: boolean = false;
   errorMessage: string | undefined;
-  errorDismissed: any;
 
   constructor(
     private publicEventService: PublicEventService,
