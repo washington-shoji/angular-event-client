@@ -14,6 +14,8 @@ import { ViewEventComponent } from './components/dialog/view-event/view-event.co
 import { adminGuard } from './guards/admin-guard/admin.guard';
 import { AdminAllEventsComponent } from './pages/admin/pages/all-events/all-events.component';
 import { EventRegistrationComponent } from './components/event-registration/event-registration.component';
+import { AdminAttendingEventsComponent } from './pages/admin/admin-attending-events/admin-attending-events.component';
+import { EventRegisteredViewComponent } from './components/dialog/event-registered-view/event-registered-view.component';
 
 export const routes: Routes = [
   {
@@ -25,7 +27,7 @@ export const routes: Routes = [
     ],
   },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'signup', component: RegisterComponent },
   {
     path: 'admin',
 
@@ -38,6 +40,11 @@ export const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
       { path: 'dashboard', component: AdminDashboardComponent },
       { path: 'all-events', component: AdminAllEventsComponent },
+      { path: 'registered-events', component: AdminAttendingEventsComponent },
+      {
+        path: 'registered-event-view',
+        component: EventRegisteredViewComponent,
+      },
       { path: 'registration', component: EventRegistrationComponent },
       { path: 'events', component: AdminEventsComponent },
       { path: 'view', component: ViewEventComponent },
