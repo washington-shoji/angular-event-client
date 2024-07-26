@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule, formatDate, Location } from '@angular/common';
-import { Subscription, take } from 'rxjs';
+import { CommonModule, Location } from '@angular/common';
+import { take } from 'rxjs';
 import { Router } from '@angular/router';
 import { AppEvent } from '../../pages/public-event-page/event.type';
 import {
@@ -12,9 +12,11 @@ import {
 } from '@angular/forms';
 import { ErrorAlertComponent } from '../error-alert/error-alert.component';
 import { AdminAttendeeEventService } from '../../pages/admin/services/admin-attendee-event.service';
+import { EventAttendee } from '../../types/event-attendee';
 
 type RouteState = {
   event: AppEvent;
+  attendee: EventAttendee;
   navigationId: number;
 };
 
@@ -28,13 +30,12 @@ type RouteState = {
 })
 export class EventRegistrationComponent implements OnInit {
   eventAttendeeFrm: FormGroup;
-
   event: AppEvent | undefined;
+  attendee: EventAttendee | undefined;
   submitting: boolean = false;
   errorMessage: string | undefined = undefined;
 
   constructor(
-    private router: Router,
     private location: Location,
     private formBuilder: FormBuilder,
     private adminAttendeeEventService: AdminAttendeeEventService
@@ -49,15 +50,18 @@ export class EventRegistrationComponent implements OnInit {
   eventAttendeeInit(): void {
     const state = this.location.getState() as RouteState;
     this.event = state.event;
+    if (state?.attendee) {
+      this.attendee = state?.attendee;
+    }
 
     this.eventAttendeeFrm = this.formBuilder.group({
-      attendeeName: [null, Validators.required],
-      status: [null, Validators.required],
+      attendeeName: [this.attendee?.attendee_name ?? null, Validators.required],
+      status: [this.attendee?.status ?? null, Validators.required],
     });
   }
 
   dismiss(): void {
-    this.router.navigate(['admin', 'all-events']);
+    this.location.back();
   }
 
   dismissError($event: boolean) {
@@ -71,21 +75,39 @@ export class EventRegistrationComponent implements OnInit {
       this.submitting = true;
       const formValue = this.eventAttendeeForm.value;
 
-      this.adminAttendeeEventService
-        .createEventAttendee(this.event.id, formValue)
-        .pipe(take(1))
-        .subscribe({
-          next: (response) => {
-            this.router.navigate(['admin', 'all-events']);
-          },
-          error: (error) => {
-            this.submitting = false;
-            this.errorMessage = error.errorMessage;
-          },
-          complete: () => {
-            this.submitting = false;
-          },
-        });
+      if (!this.attendee) {
+        this.adminAttendeeEventService
+          .createEventAttendee(this.event.id, formValue)
+          .pipe(take(1))
+          .subscribe({
+            next: () => {
+              this.dismiss();
+            },
+            error: (error) => {
+              this.submitting = false;
+              this.errorMessage = error.errorMessage;
+            },
+            complete: () => {
+              this.submitting = false;
+            },
+          });
+      } else {
+        this.adminAttendeeEventService
+          .updateEventAttendee(this.event.id, formValue)
+          .pipe(take(1))
+          .subscribe({
+            next: () => {
+              this.dismiss();
+            },
+            error: (error) => {
+              this.submitting = false;
+              this.errorMessage = error.errorMessage;
+            },
+            complete: () => {
+              this.submitting = false;
+            },
+          });
+      }
     }
   }
 
