@@ -25,7 +25,7 @@ export const apiAdminInterceptor: HttpInterceptorFn = (
   if (
     !(
       req.url.includes('login') ||
-      req.url.includes('register') ||
+      req.url.includes('signup') ||
       req.url.includes('refresh-token')
     )
   ) {
@@ -44,7 +44,7 @@ export const apiAdminInterceptor: HttpInterceptorFn = (
         error instanceof HttpErrorResponse &&
         !(
           req.url.includes('login') ||
-          req.url.includes('register') ||
+          req.url.includes('signup') ||
           req.url.includes('refresh-token')
         ) && // <- this will avoid an infinite loop when the accessToken expires.
         error.status === 401
