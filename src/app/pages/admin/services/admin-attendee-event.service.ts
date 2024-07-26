@@ -18,4 +18,14 @@ export class AdminAttendeeEventService {
       payload
     );
   }
+
+  updateEventAttendee(
+    eventId: string,
+    payload: EventAttendee
+  ): Observable<EventAttendee> {
+    return this.http.put<EventAttendee>(
+      `${this.URL}/event-attendee/event/${eventId}`,
+      payload
+    );
+  }
 }
