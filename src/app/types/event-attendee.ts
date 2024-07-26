@@ -1,5 +1,5 @@
 export interface EventAttendee {
   id?: string;
-  attendeeName: string;
+  attendee_name: string;
   status: string;
 }
