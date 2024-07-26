@@ -1,0 +1,104 @@
+<div class=" rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+    <div class="h-56 w-full">
+        <div href="#">
+            <img class="mx-auto h-full dark:hidden"
+                src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg" alt="" />
+            <img class="mx-auto hidden h-full dark:block"
+                src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg" alt="" />
+        </div>
+    </div>
+    <div class="pt-6">
+        <div class="mb-4 flex items-center justify-between gap-4">
+            <span
+                class="me-2 rounded bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">
+                Status: {{registeredEvent().attendee.status}} </span>
+
+            <div class="flex items-center justify-end gap-1">
+                <button type="button" data-tooltip-target="tooltip-quick-look"
+                    class="rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    (click)="navigateToView()">
+                    <span class="sr-only"> Quick look </span>
+                    <svg class="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-width="2"
+                            d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z" />
+                        <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                    </svg>
+                </button>
+                <div id="tooltip-quick-look" role="tooltip"
+                    class="tooltip invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 shadow-sm transition-opacity duration-300 dark:bg-gray-700"
+                    data-popper-placement="top">
+                    Quick look
+                    <div class="tooltip-arrow" data-popper-arrow=""></div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="text-lg font-semibold leading-tight text-gray-900 dark:text-white">
+            {{registeredEvent().event.title}}
+        </h2>
+
+        <div class="flex items-center gap-2 mt-2">
+            @if (registeredEvent().event.location === 'Venue') {
+            <svg class="h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd"
+                    d="M11.906 1.994a8.002 8.002 0 0 1 8.09 8.421 7.996 7.996 0 0 1-1.297 3.957.996.996 0 0 1-.133.204l-.108.129c-.178.243-.37.477-.573.699l-5.112 6.224a1 1 0 0 1-1.545 0L5.982 15.26l-.002-.002a18.146 18.146 0 0 1-.309-.38l-.133-.163a.999.999 0 0 1-.13-.202 7.995 7.995 0 0 1 6.498-12.518ZM15 9.997a3 3 0 1 1-5.999 0 3 3 0 0 1 5.999 0Z"
+                    clip-rule="evenodd" />
+            </svg>
+            <div class="flex gap-2">
+                <p class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    {{registeredEvent().address.street}}
+                </p>
+                <p class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    {{registeredEvent().address.city_suburb}} {{registeredEvent().address.postal_code}}
+                </p>
+            </div>
+
+            }
+
+            @if (registeredEvent().event.location === 'Online') {
+            <svg class="h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd"
+                    d="M14 7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7Zm2 9.387 4.684 1.562A1 1 0 0 0 22 17V7a1 1 0 0 0-1.316-.949L16 7.613v8.774Z"
+                    clip-rule="evenodd" />
+            </svg>
+
+            <div class="flex gap-2">
+                <p class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    Online
+                </p>
+            </div>
+            }
+        </div>
+
+        <div class="flex items-center gap-2 mt-2">
+            <svg class="h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd"
+                    d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z"
+                    clip-rule="evenodd" />
+            </svg>
+
+            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                {{registeredEvent().event.end_time | date:'dd/MM/yyyy hh:mm a'}}
+            </span>
+        </div>
+
+        <div class="mt-4 flex items-center justify-between gap-4">
+            <button type="button"
+                class="w-full inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                (click)="navigateToEdit()">
+                <svg aria-hidden="true" class="-ms-2 me-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path>
+                    <path fill-rule="evenodd"
+                        d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                        clip-rule="evenodd"></path>
+                </svg>
+                Edit attendance
+            </button>
+        </div>
+    </div>
+</div>
