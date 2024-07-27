@@ -1,21 +1,9 @@
+import { AppEvent } from './event';
+import { EventAddress } from './event-address';
+import { EventAttendee } from './event-attendee';
+
 export interface RegisteredEvent {
-  attendee: {
-    attendee_name: string;
-    status: string;
-  };
-  event: {
-    id: string;
-    title: string;
-    description: string;
-    start_time: string;
-    end_time: string;
-    location: string;
-  };
-  address: {
-    street: string;
-    city_suburb: string;
-    state: string;
-    country: string;
-    postal_code: string;
-  };
+  attendee: EventAttendee;
+  event: AppEvent;
+  address: EventAddress;
 }
