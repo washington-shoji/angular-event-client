@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core';
-import { AppEvent } from '../../pages/public-event-page/event.type';
 import { CommonModule, DatePipe } from '@angular/common';
+import { AppEvent } from '../../types/event';
 
 @Component({
   selector: 'app-private-event-card',
@@ -43,7 +43,7 @@ export class PrivateEventCardComponent {
   }
 
   navigate($event: AppEvent): void {
-    if ($event.id) {
+    if ($event.event_id) {
       this.navigated.emit($event);
     }
   }
