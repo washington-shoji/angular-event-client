@@ -10,11 +10,11 @@ import {
 import { Router } from '@angular/router';
 import { Subscription, take } from 'rxjs';
 import { AdminEventService } from '../../../pages/admin/services/admin-event.service';
-import { AppEvent } from '../../../pages/public-event-page/event.type';
 import { ErrorAlertComponent } from '../../error-alert/error-alert.component';
 import { AddressFormComponent } from '../../form/address-form/address-form.component';
 import { EventAddress } from '../../../types/event-address';
 import { AdminEventAddressService } from '../../../pages/admin/services/admin-event-address.service';
+import { AppEvent } from '../../../types/event';
 
 type RouteState = {
   event: AppEvent;
@@ -66,25 +66,29 @@ export class UpdateEventComponent implements OnInit, OnDestroy {
     this.event = state.event;
 
     this.eventFrm = this.formBuilder.group({
-      id: [this.event.id],
+      id: [this.event.event_id],
       title: [this.event.title, Validators.required],
       description: [this.event.description, Validators.required],
-      start_time: [
-        this._convertDateTime(this.event.start_time),
+      registration_open: [
+        this._convertDateTime(this.event.registration_open),
         Validators.required,
       ],
-      end_time: [
-        this._convertDateTime(this.event.end_time),
+      registration_close: [
+        this._convertDateTime(this.event.registration_close),
         Validators.required,
       ],
-      location: [this.event.location, Validators.required],
+      event_date: [
+        this._convertDateTime(this.event.event_date),
+        Validators.required,
+      ],
+      location_type: [this.event.location_type, Validators.required],
     });
   }
 
   eventAddressInit(): void {
-    if (this.event?.id) {
+    if (this.event?.event_id) {
       this.adminEventAddressService
-        .findEventAddressByEventId(this.event.id)
+        .findEventAddressByEventId(this.event.event_id)
         .pipe(take(1))
         .subscribe({
           next: (response) => {
@@ -113,11 +117,11 @@ export class UpdateEventComponent implements OnInit, OnDestroy {
   }
 
   submit(): void {
-    if (!this.eventForm.valid || !this.event?.id) return;
+    if (!this.eventForm.valid || !this.event?.event_id) return;
 
     this.submitting = true;
     const formValue = this.eventForm.value;
-    const id = this.event?.id;
+    const id = this.event?.event_id;
     this.adminEventService
       .updateEvent(id, formValue)
       .pipe(take(1))
@@ -136,9 +140,9 @@ export class UpdateEventComponent implements OnInit, OnDestroy {
   }
 
   submitAddress($event: FormGroup): void {
-    if ($event.valid && this.event?.id) {
+    if ($event.valid && this.event?.event_id) {
       this.adminEventAddressService
-        .createEventAddress(this.event?.id, $event.value)
+        .createEventAddress(this.event?.event_id, $event.value)
         .pipe(take(1))
         .subscribe({
           next: (response) => {
@@ -167,16 +171,20 @@ export class UpdateEventComponent implements OnInit, OnDestroy {
     return this.eventForm.get('description') as FormControl;
   }
 
-  get registrationControl(): FormControl {
-    return this.eventForm.get('start_time') as FormControl;
+  get registrationOpenControl(): FormControl {
+    return this.eventForm.get('registration_open') as FormControl;
   }
 
-  get closeControl(): FormControl {
-    return this.eventForm.get('end_time') as FormControl;
+  get registrationCloseControl(): FormControl {
+    return this.eventForm.get('registration_close') as FormControl;
   }
 
-  get locationControl(): FormControl {
-    return this.eventForm.get('location') as FormControl;
+  get eventDateControl(): FormControl {
+    return this.eventForm.get('event_date') as FormControl;
+  }
+
+  get locationTypeControl(): FormControl {
+    return this.eventForm.get('location_type') as FormControl;
   }
 
   private _convertDateTime(date: string): string {

@@ -19,26 +19,35 @@
                         placeholder="Your description here" [formControl]="descriptionControl"></textarea>
                 </div>
                 <div class="w-full">
-                    <label for="registration"
+                    <label for="registration-open"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Registration
                         Open</label>
-                    <input type="datetime-local" name="registration" id="registration"
+                    <input type="datetime-local" name="registration-open" id="registration-open"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="Event registration" required="" [formControl]="registrationControl">
+                        placeholder="Event registration open" required="" [formControl]="registrationOpenControl">
                 </div>
                 <div class="w-full">
-                    <label for="close" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event
+                    <label for="registration-close"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event
                         Close</label>
-                    <input type="datetime-local" name="close" id="close"
+                    <input type="datetime-local" name="registration-close" id="registration-close"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="Event close" required="" [formControl]="closeControl">
+                        placeholder="Event registration close" required="" [formControl]="registrationCloseControl">
                 </div>
-                <div class="sm:col-span-2">
-                    <label for="location" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event
-                        Location</label>
-                    <input type="text" name="location" id="location"
+                <div class="w-full">
+                    <label for="event-date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event
+                        Date</label>
+                    <input type="datetime-local" name="event-date" id="event-date"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="Type event location" required="" [formControl]="locationControl">
+                        placeholder="Event day" required="" [formControl]="eventDateControl">
+                </div>
+                <div class="w-full">
+                    <label for="event-location-type"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event
+                        Location Type</label>
+                    <input type="text" name="event-location-type" id="event-location-type"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Event location type" required="" [formControl]="locationTypeControl">
                 </div>
             </div>
             <div class=" flex flex-col sm:flex-row gap-2">
@@ -80,7 +89,7 @@
     <app-error-alert [errorMessage]="errorMessage" (dismissClick)="dismissError($event)"></app-error-alert>
     }
 
-    @if(event?.location === 'Venue' && this.eventAddress) {
+    @if(event?.location_type === 'VENUE' && this.eventAddress) {
     <div class="py-4 px-4 mx-auto max-w-2xl">
         <app-address-form [eventAddress]="eventAddress" [submitting]="submitting"
             (addressFrmData)="submitAddress($event)">
