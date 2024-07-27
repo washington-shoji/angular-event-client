@@ -13,20 +13,20 @@
             <div>
                 <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Registration Opens</dt>
                 <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
-                    {{event.start_time | date:'dd/MM/yyyy hh:mm a'}}
+                    {{event.registration_open | date:'dd/MM/yyyy hh:mm a'}}
                 </dd>
             </div>
             <div>
                 <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Registration Closes</dt>
                 <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
-                    {{event.end_time | date:'dd/MM/yyyy hh:mm a'}}
+                    {{event.registration_close | date:'dd/MM/yyyy hh:mm a'}}
                 </dd>
             </div>
         </dl>
         <dl>
             <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Location</dt>
             <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
-                {{event.location}}
+                {{event.location_type}}
             </dd>
         </dl>
         <div class="flex items-center space-x-4">

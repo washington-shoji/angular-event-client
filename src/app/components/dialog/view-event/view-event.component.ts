@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { Router } from '@angular/router';
-import { AppEvent } from '../../../pages/public-event-page/event.type';
+import { AppEvent } from '../../../types/event';
 
 type RouteState = {
   event: AppEvent;
