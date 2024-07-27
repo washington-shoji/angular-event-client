@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { Router } from '@angular/router';
-import { AppEvent } from '../../../pages/public-event-page/event.type';
 import { AdminEventService } from '../../../pages/admin/services/admin-event.service';
 import { take } from 'rxjs';
 import { ErrorAlertComponent } from '../../error-alert/error-alert.component';
+import { AppEvent } from '../../../types/event';
 
 type RouteState = {
   event: AppEvent;
@@ -42,11 +42,11 @@ export class DeleteEventComponent implements OnInit {
   }
 
   submit(): void {
-    if (!this.event?.id) return;
+    if (!this.event?.event_id) return;
     this.submitting = true;
 
     this.adminEventService
-      .deleteEvent(this.event.id)
+      .deleteEvent(this.event.event_id)
       .pipe(take(1))
       .subscribe({
         next: (response) => {
