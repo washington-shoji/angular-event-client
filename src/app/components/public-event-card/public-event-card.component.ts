@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
-import { AppEvent } from '../../pages/public-event-page/event.type';
 import { CommonModule, DatePipe } from '@angular/common';
+import { AppEvent } from '../../types/event';
 
 @Component({
   selector: 'app-public-event-card',
