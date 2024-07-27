@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { PublicEventService } from './public-event.service';
 import { take } from 'rxjs';
 import { PublicEventCardComponent } from '../../components/public-event-card/public-event-card.component';
-import { AppEvent } from './event.type';
 import { LoadingIndicatorComponent } from '../../components/loading-indicator/loading-indicator.component';
 import { ErrorAlertComponent } from '../../components/error-alert/error-alert.component';
+import { AppEvent } from '../../types/event';
 
 @Component({
   selector: 'app-public-event-page',
