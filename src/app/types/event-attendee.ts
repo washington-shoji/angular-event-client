@@ -1,5 +1,7 @@
 export interface EventAttendee {
-  id?: string;
-  attendee_name: string;
-  status: string;
+  attendee_id: string;
+  registration_name: string;
+  attendee_status: ATTENDEE_STATUS;
 }
+
+export type ATTENDEE_STATUS = 'ATTENDING' | 'TENTATIVE' | 'NOT-ATTENDING';

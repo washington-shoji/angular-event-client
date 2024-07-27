@@ -1,5 +1,5 @@
 export interface EventAddress {
-  id?: string;
+  address_id?: string;
   street: string;
   city_suburb: string;
   state: string;
