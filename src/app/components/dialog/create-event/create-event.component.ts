@@ -12,14 +12,6 @@ import { AdminEventService } from '../../../pages/admin/services/admin-event.ser
 import { take } from 'rxjs';
 import { ErrorAlertComponent } from '../../error-alert/error-alert.component';
 
-interface EventForm {
-  title: FormControl<string>;
-  description: FormControl<string>;
-  registration: FormControl<string>;
-  close: FormControl<string>;
-  location: FormControl<string>;
-}
-
 @Component({
   selector: 'app-create-event',
   standalone: true,
@@ -44,9 +36,10 @@ export class CreateEventComponent implements OnInit {
     this.eventFrm = this.formBuilder.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
-      start_time: ['', Validators.required],
-      end_time: ['', Validators.required],
-      location: ['', Validators.required],
+      registration_open: ['', Validators.required],
+      registration_close: ['', Validators.required],
+      event_date: ['', Validators.required],
+      location_type: ['', Validators.required],
     });
   }
 
@@ -61,7 +54,7 @@ export class CreateEventComponent implements OnInit {
       .createEvents(formValue)
       .pipe(take(1))
       .subscribe({
-        next: (response) => {
+        next: () => {
           this.router.navigate(['admin', 'events']);
         },
         error: (error) => {
@@ -92,15 +85,19 @@ export class CreateEventComponent implements OnInit {
     return this.eventForm.get('description') as FormControl;
   }
 
-  get registrationControl(): FormControl {
-    return this.eventForm.get('start_time') as FormControl;
+  get registrationOpenControl(): FormControl {
+    return this.eventForm.get('registration_open') as FormControl;
   }
 
-  get closeControl(): FormControl {
-    return this.eventForm.get('end_time') as FormControl;
+  get registrationCloseControl(): FormControl {
+    return this.eventForm.get('registration_close') as FormControl;
   }
 
-  get locationControl(): FormControl {
-    return this.eventForm.get('location') as FormControl;
+  get eventDateControl(): FormControl {
+    return this.eventForm.get('event_date') as FormControl;
+  }
+
+  get locationTypeControl(): FormControl {
+    return this.eventForm.get('location_type') as FormControl;
   }
 }
