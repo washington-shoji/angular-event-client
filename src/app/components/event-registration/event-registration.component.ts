@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { take } from 'rxjs';
-import { Router } from '@angular/router';
-import { AppEvent } from '../../pages/public-event-page/event.type';
 import {
   FormBuilder,
   FormControl,
@@ -13,6 +11,7 @@ import {
 import { ErrorAlertComponent } from '../error-alert/error-alert.component';
 import { AdminAttendeeEventService } from '../../pages/admin/services/admin-attendee-event.service';
 import { EventAttendee } from '../../types/event-attendee';
+import { AppEvent } from '../../types/event';
 
 type RouteState = {
   event: AppEvent;
@@ -55,8 +54,14 @@ export class EventRegistrationComponent implements OnInit {
     }
 
     this.eventAttendeeFrm = this.formBuilder.group({
-      attendeeName: [this.attendee?.attendee_name ?? null, Validators.required],
-      status: [this.attendee?.status ?? null, Validators.required],
+      registration_name: [
+        this.attendee?.registration_name ?? null,
+        Validators.required,
+      ],
+      attendee_status: [
+        this.attendee?.attendee_status ?? null,
+        Validators.required,
+      ],
     });
   }
 
@@ -71,13 +76,13 @@ export class EventRegistrationComponent implements OnInit {
   }
 
   submit(): void {
-    if (this.eventAttendeeForm.valid && this.event?.id) {
+    if (this.eventAttendeeForm.valid && this.event?.event_id) {
       this.submitting = true;
       const formValue = this.eventAttendeeForm.value;
 
       if (!this.attendee) {
         this.adminAttendeeEventService
-          .createEventAttendee(this.event.id, formValue)
+          .createEventAttendee(this.event.event_id, formValue)
           .pipe(take(1))
           .subscribe({
             next: () => {
@@ -93,7 +98,7 @@ export class EventRegistrationComponent implements OnInit {
           });
       } else {
         this.adminAttendeeEventService
-          .updateEventAttendee(this.event.id, formValue)
+          .updateEventAttendee(this.event?.event_id as string, formValue)
           .pipe(take(1))
           .subscribe({
             next: () => {
@@ -115,11 +120,11 @@ export class EventRegistrationComponent implements OnInit {
     return this.eventAttendeeFrm;
   }
 
-  get attendeeNameControl(): FormControl {
-    return this.eventAttendeeForm.get('attendeeName') as FormControl;
+  get attendeeRegistrationNameControl(): FormControl {
+    return this.eventAttendeeForm.get('registration_name') as FormControl;
   }
 
-  get statusControl(): FormControl {
-    return this.eventAttendeeForm.get('status') as FormControl;
+  get attendeeStatusControl(): FormControl {
+    return this.eventAttendeeForm.get('attendee_status') as FormControl;
   }
 }
