@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TableComponent } from '../../../components/table/table/table.component';
 import { AdminEventService } from '../services/admin-event.service';
 import { take } from 'rxjs';
-import { AppEvent } from '../../public-event-page/event.type';
+import { AppEvent } from '../../../types/event';
 
 @Component({
   selector: 'app-admin-events',
