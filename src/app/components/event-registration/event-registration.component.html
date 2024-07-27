@@ -12,32 +12,26 @@
         <dl>
             <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Location</dt>
             <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
-                {{event.location}}
+                {{event.location_type}}
             </dd>
         </dl>
         <dl class="flex items-center space-x-6">
             <div class="w-full">
-                <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Attendee Name</dt>
+                <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Registration Name</dt>
                 <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
-                    <input type="text" name="location" id="location"
+                    <input type="text" name="registration-name" id="registration-name"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="Type event location" required="" [formControl]="attendeeNameControl">
+                        placeholder="Type event location" required="" [formControl]="attendeeRegistrationNameControl">
                 </dd>
             </div>
             <div class="w-full">
-                <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Confirmation</dt>
+                <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Attendance Status</dt>
                 <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
-                    <input type="text" name="location" id="location"
+                    <input type="text" name="attendance-status" id="attendance-status"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="Type event location" required="" [formControl]="statusControl">
+                        placeholder="Attendance status" required="" [formControl]="attendeeStatusControl">
                 </dd>
             </div>
-        </dl>
-        <dl>
-            <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Location</dt>
-            <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
-                {{event.location}}
-            </dd>
         </dl>
         <div class="flex items-center space-x-4">
             <button type="button"

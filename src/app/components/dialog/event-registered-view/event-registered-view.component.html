@@ -17,24 +17,24 @@
                     <span
                         class=" rounded bg-primary-100 px-2.5 py-1 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">
                         <span class="font-extrabold text-white dark:text-white">
-                            Status: {{registeredEvent?.attendee?.status}}
+                            Status: {{registeredEvent?.attendee?.attendee_status}}
                         </span>
                     </span>
 
                     <span
                         class=" rounded bg-primary-100 px-2.5 py-1 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-300">
                         <span class="font-extrabold text-white dark:text-white">
-                            Name: {{registeredEvent?.attendee?.attendee_name}}
+                            Name: {{registeredEvent?.attendee?.registration_name}}
                         </span>
                     </span>
                 </div>
 
                 <div class="mt-4 gap-4 flex flex-col">
                     <span class="font-extrabold text-gray-500 dark:text-gray-400">
-                        Location: {{registeredEvent?.event?.location}}
+                        Location: {{registeredEvent?.event?.location_type}}
                     </span>
 
-                    @if (registeredEvent?.event?.location === 'Venue') {
+                    @if (registeredEvent?.event?.location_type === 'VENUE') {
                     <div class="flex flex-col">
                         <span class="font-extrabold text-gray-500 dark:text-gray-400">
                             Address:
