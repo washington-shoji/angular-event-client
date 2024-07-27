@@ -1,8 +1,8 @@
 import { Component, input } from '@angular/core';
-import { AppEvent } from '../../../pages/public-event-page/event.type';
 import { Router } from '@angular/router';
 import { AdminEventService } from '../../../pages/admin/services/admin-event.service';
 import { DatePipe } from '@angular/common';
+import { AppEvent } from '../../../types/event';
 
 type Action = 'DELETE' | 'UPDATE' | 'VIEW';
 
