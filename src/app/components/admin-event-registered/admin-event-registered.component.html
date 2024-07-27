@@ -11,7 +11,7 @@
         <div class="mb-4 flex items-center justify-between gap-4">
             <span
                 class="me-2 rounded bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-300">
-                Status: {{registeredEvent().attendee.status}} </span>
+                Status: {{registeredEvent().attendee.attendee_status}} </span>
 
             <div class="flex items-center justify-end gap-1">
                 <button type="button" data-tooltip-target="tooltip-quick-look"
@@ -39,7 +39,7 @@
         </h2>
 
         <div class="flex items-center gap-2 mt-2">
-            @if (registeredEvent().event.location === 'Venue') {
+            @if (registeredEvent().event.location_type === 'VENUE') {
             <svg class="h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                 width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                 <path fill-rule="evenodd"
@@ -57,7 +57,7 @@
 
             }
 
-            @if (registeredEvent().event.location === 'Online') {
+            @if (registeredEvent().event.location_type === 'ONLINE') {
             <svg class="h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                 width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                 <path fill-rule="evenodd"
@@ -82,7 +82,7 @@
             </svg>
 
             <span class="text-sm font-medium text-gray-500 dark:text-gray-400">
-                {{registeredEvent().event.end_time | date:'dd/MM/yyyy hh:mm a'}}
+                {{registeredEvent().event.event_date| date:'dd/MM/yyyy hh:mm a'}}
             </span>
         </div>
 
