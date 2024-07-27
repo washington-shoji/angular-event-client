@@ -3,7 +3,7 @@ import { TableFooterComponent } from '../table-footer/table-footer.component';
 import { TableHeaderComponent } from '../table-header/table-header.component';
 import { TableBodyComponent } from '../table-body/table-body.component';
 import { Router, RouterOutlet } from '@angular/router';
-import { AppEvent } from '../../../pages/public-event-page/event.type';
+import { AppEvent } from '../../../types/event';
 
 @Component({
   selector: 'app-table',
