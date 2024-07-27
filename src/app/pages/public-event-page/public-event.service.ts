@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AppEvent } from './event.type';
+import { AppEvent } from '../../types/event';
 
 @Injectable()
 export class PublicEventService {
