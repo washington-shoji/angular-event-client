@@ -5,6 +5,7 @@ import { PublicEventCardComponent } from '../../components/public-event-card/pub
 import { LoadingIndicatorComponent } from '../../components/loading-indicator/loading-indicator.component';
 import { ErrorAlertComponent } from '../../components/error-alert/error-alert.component';
 import { AppEvent } from '../../types/event';
+import { InfoAlertComponent } from '../../components/info-alert/info-alert.component';
 
 @Component({
   selector: 'app-public-event-page',
@@ -12,6 +13,7 @@ import { AppEvent } from '../../types/event';
   imports: [
     PublicEventCardComponent,
     LoadingIndicatorComponent,
+    InfoAlertComponent,
     ErrorAlertComponent,
   ],
   providers: [PublicEventService],

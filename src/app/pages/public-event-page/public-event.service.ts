@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AppEvent } from '../../types/event';
+import { AppRegisteredEvent } from '../../types/event';
 
 @Injectable()
 export class PublicEventService {
@@ -9,7 +9,7 @@ export class PublicEventService {
 
   URL: string = 'http://localhost:3000/api/v1';
 
-  getAllPublicEvents(): Observable<AppEvent[]> {
-    return this.http.get<AppEvent[]>(`${this.URL}/others-events`);
+  getAllPublicEvents(): Observable<AppRegisteredEvent[]> {
+    return this.http.get<AppRegisteredEvent[]>(`${this.URL}/others-events`);
   }
 }
