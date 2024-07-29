@@ -6,6 +6,7 @@ import { PublicEventService } from '../../../public-event-page/public-event.serv
 import { PrivateEventCardComponent } from '../../../../components/private-event-card/private-event-card.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppEvent } from '../../../../types/event';
+import { InfoAlertComponent } from '../../../../components/info-alert/info-alert.component';
 
 @Component({
   selector: 'app-all-events',
@@ -16,6 +17,7 @@ import { AppEvent } from '../../../../types/event';
     PrivateEventCardComponent,
     ErrorAlertComponent,
     LoadingIndicatorComponent,
+    InfoAlertComponent,
   ],
   providers: [PublicEventService],
 })

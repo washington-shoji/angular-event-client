@@ -19,11 +19,17 @@
         <app-error-alert [errorMessage]="errorMessage" (dismissClick)="setErrorDismissed($event)"></app-error-alert>
         }
 
+        @if (!events.length && !errorMessage && !loading) {
+        <app-info-alert [dismissible]="false" [infoTitle]="'Events Info'"
+            [infoMessage]="'There are no events available at the moment, please try again later!'"></app-info-alert>
+        } @else {
         <div class="grid gap-8 lg:grid-cols-2">
             @for (event of events; track $index) {
             <app-private-event-card [event]="event" (navigated)="navigateToRegistration($event)">
             </app-private-event-card>
             }
         </div>
+        }
+
     </div>
 </section>
