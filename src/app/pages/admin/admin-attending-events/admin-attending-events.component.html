@@ -11,12 +11,17 @@
         <app-error-alert [errorMessage]="errorMessage" (dismissClick)="setErrorDismissed($event)"></app-error-alert>
         }
 
-
+        @if (!registeredEvents.length && !errorMessage && !loading) {
+        <app-info-alert [dismissible]="false" [infoTitle]="'Events Info'"
+            [infoMessage]="'You have no registered event(s) at the moment, please register on events!'"></app-info-alert>
+        } @else {
         <div class="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
             @for (event of registeredEvents; track $index) {
             <app-admin-event-registered [registeredEvent]="event"></app-admin-event-registered>
             }
         </div>
+        }
+
     </div>
 
 </section>

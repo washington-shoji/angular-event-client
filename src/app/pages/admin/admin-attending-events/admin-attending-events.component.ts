@@ -6,6 +6,7 @@ import { AdminEventRegisteredComponent } from '../../../components/admin-event-r
 import { RegisteredEvent } from '../../../types/event-registered';
 import { LoadingIndicatorComponent } from '../../../components/loading-indicator/loading-indicator.component';
 import { ErrorAlertComponent } from '../../../components/error-alert/error-alert.component';
+import { InfoAlertComponent } from '../../../components/info-alert/info-alert.component';
 
 @Component({
   selector: 'app-admin-attending-events',
@@ -14,6 +15,7 @@ import { ErrorAlertComponent } from '../../../components/error-alert/error-alert
     CommonModule,
     AdminEventRegisteredComponent,
     LoadingIndicatorComponent,
+    InfoAlertComponent,
     ErrorAlertComponent,
   ],
   providers: [AdminRegisteredEventsService],
@@ -43,7 +45,6 @@ export class AdminAttendingEventsComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.registeredEvents = data;
-          console.warn('data', data);
         },
         error: (error) => {
           this.loading = false;
