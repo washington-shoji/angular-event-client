@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map, take } from 'rxjs';
 import { Router } from '@angular/router';
 import { SessionStorageService } from '../../services/session-storage/session-storage.service';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 export type UserAuth = {
   username: string;
