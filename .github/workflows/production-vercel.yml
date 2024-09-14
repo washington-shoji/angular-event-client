@@ -38,4 +38,5 @@ jobs:
       - name: Deploy to Vercel
         env:
           VERCEL_TOKEN: ${{ secrets.CI_CD_ANGULAR_VERCEL_TOKEN }}
-        run: vercel --prod --yes --force --token=$VERCEL_TOKEN
+          API_URL: ${{ secrets.API_URL }}
+        run: vercel --prod --yes --force --token=$VERCEL_TOKEN -e API_URL=$API_URL
