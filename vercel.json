@@ -2,14 +2,16 @@
   "version": 2,
   "builds": [
     {
-      "src": "dist/event-client/**/*",
-      "use": "@vercel/static"
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "dist/event-client" }
     }
   ],
   "routes": [
+    { "handle": "filesystem" },
     {
       "src": "/(.*)",
-      "dest": "/dist/event-client/$1"
+      "dest": "/index.html"
     }
   ]
 }
