@@ -35,17 +35,11 @@ jobs:
           API_URL: ${{ secrets.API_URL }}
         run: npm run build -- --configuration production
 
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
       - name: Deploy to Vercel
-        uses: vercel-action@v20
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-args: "--prod"
-
-      # - name: Install Vercel CLI
-      #   run: npm install --global vercel@latest
-
-      # - name: Deploy to Vercel
-      #   env:
-      #     VERCEL_TOKEN: ${{ secrets.CI_CD_ANGULAR_VERCEL_TOKEN }}
-      #     API_URL: ${{ secrets.API_URL }}
-      #   run: vercel --prod --yes --force --token=$VERCEL_TOKEN -e API_URL=$API_UR
+        env:
+          VERCEL_TOKEN: ${{ secrets.CI_CD_ANGULAR_VERCEL_TOKEN }}
+          API_URL: ${{ secrets.API_URL }}
+        run: vercel --prod --yes --force --token=$VERCEL_TOKEN -e API_URL=$API_UR
