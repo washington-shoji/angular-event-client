@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { EventAddress } from '../../../types/event-address';
+import { environment } from '../../../../../environments/environment';
 
 @Injectable()
 export class AdminEventAddressService {
   constructor(private http: HttpClient) {}
 
-  private URL: string = 'http://localhost:3000/api/v1';
+  private URL: string = `${environment.apiUrl}/api/v1`;
 
   createEventAddress(
     eventId: string,
