@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { AdminEventService } from '../../../pages/admin/services/admin-event.service';
 import { take } from 'rxjs';
 import { ErrorAlertComponent } from '../../error-alert/error-alert.component';
+import { LOCATION_TYPE } from '../../../types/event';
 
 @Component({
   selector: 'app-create-event',
@@ -24,12 +25,15 @@ export class CreateEventComponent implements OnInit {
   eventFrm: FormGroup;
   submitting: boolean = false;
   errorMessage: string | undefined = undefined;
+  locationTypeOptions: LOCATION_TYPE[] = [];
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
     private adminEventService: AdminEventService
   ) {
     this.eventFrm = new FormGroup({});
+    this.locationTypeOptions = ['VENUE', 'ONLINE'];
   }
 
   ngOnInit(): void {
@@ -39,7 +43,7 @@ export class CreateEventComponent implements OnInit {
       registration_open: ['', Validators.required],
       registration_close: ['', Validators.required],
       event_date: ['', Validators.required],
-      location_type: ['', Validators.required],
+      location_type: ['VENUE', Validators.required],
     });
   }
 

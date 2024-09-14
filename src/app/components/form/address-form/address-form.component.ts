@@ -20,6 +20,7 @@ export class AddressFormComponent implements OnInit {
   eventAddress = input.required<EventAddress>();
   submitting = input.required<boolean>();
   addressFrmData = output<FormGroup>();
+  dismissed = output<boolean>();
 
   addressFrm: FormGroup;
   constructor(private formBuilder: FormBuilder) {
@@ -43,6 +44,10 @@ export class AddressFormComponent implements OnInit {
         Validators.required,
       ],
     });
+  }
+
+  dismiss(): void {
+    this.dismissed.emit(true);
   }
 
   submit(): void {
