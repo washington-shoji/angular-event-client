@@ -30,7 +30,7 @@ jobs:
       - name: Build Angular App
         env:
           API_URL: ${{ secrets.API_URL }}
-        run: npm run build
+        run: npm run build -- --configuration production
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
@@ -39,4 +39,4 @@ jobs:
         env:
           VERCEL_TOKEN: ${{ secrets.CI_CD_ANGULAR_VERCEL_TOKEN }}
           API_URL: ${{ secrets.API_URL }}
-        run: vercel --prod --yes --force --token=$VERCEL_TOKEN -e API_URL=$API_URL
+        run: vercel --prod --yes --force --token=$VERCEL_TOKEN -e API_URL=$API_UR --cwd .
