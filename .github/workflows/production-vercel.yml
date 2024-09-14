@@ -21,13 +21,19 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
 
+      - name: Install envsubst
+        run: sudo apt-get update && sudo apt-get install -y gettext-base
+
       - name: Install Dependencies
         run: npm ci
+
+      - name: Replace API_URL Placeholder
+        run: sed -i 's~API_URL_PLACEHOLDER~${{ secrets.API_URL }}~g' src/environments/environment.prod.ts
 
       - name: Build Angular App
         env:
           API_URL: ${{ secrets.API_URL }}
-        run: npm run build
+        run: npm run build -- --configuration production
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
@@ -35,4 +41,5 @@ jobs:
       - name: Deploy to Vercel
         env:
           VERCEL_TOKEN: ${{ secrets.CI_CD_ANGULAR_VERCEL_TOKEN }}
-        run: vercel --prod --confirm --token=$VERCEL_TOKEN
+          API_URL: ${{ secrets.API_URL }}
+        run: vercel --prod --yes --force --token=$VERCEL_TOKEN -e API_URL=$API_UR
