@@ -106,7 +106,8 @@ export class UpdateEventComponent implements OnInit, OnDestroy {
     }
   }
 
-  dismiss(): void {
+  dismiss($event?: boolean): void {
+    if (!$event) return;
     this.router.navigate(['admin', 'events']);
   }
 
