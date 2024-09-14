@@ -4,4 +4,4 @@
 envsubst < src/environments/environment.prod.ts.template > src/environments/environment.prod.ts
 
 # Build the Angular app
-ng build --prod
+ng build --configuration production
