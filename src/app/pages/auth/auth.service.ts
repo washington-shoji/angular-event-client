@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map, take } from 'rxjs';
 import { Router } from '@angular/router';
 import { SessionStorageService } from '../../services/session-storage/session-storage.service';
+import { environment } from '../../../../environments/environment';
 
 export type UserAuth = {
   username: string;
@@ -41,7 +42,7 @@ export class AuthService {
     private router: Router
   ) {}
 
-  URL: string = 'http://localhost:3000/api/v1';
+  URL: string = `${environment.apiUrl}/api/v1`;
 
   login(payload: UserAuth): Observable<ApiToken> {
     const apiResponseObservable = this.getApiToken({ payload: payload });

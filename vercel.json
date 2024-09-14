@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "name": "event-client",
+  "builds": [
+    {
+      "src": "dist/event-client/**/*",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/dist/event-client/$1"
+    }
+  ],
+  "env": {
+    "API_URL": "@api-url"
+  }
+}

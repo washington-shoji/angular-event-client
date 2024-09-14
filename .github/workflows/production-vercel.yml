@@ -1,0 +1,38 @@
+name: Production CI Vercel Deployment
+
+on:
+  push:
+    branches: [prod-vercel-deployment]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Angular App
+        env:
+          API_URL: ${{ secrets.API_URL }}
+        run: npm run build
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Deploy to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.CI_CD_ANGULAR_VERCEL_TOKEN }}
+        run: vercel --prod --confirm --token=$VERCEL_TOKEN
