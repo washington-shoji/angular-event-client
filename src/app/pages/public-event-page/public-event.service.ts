@@ -11,6 +11,6 @@ export class PublicEventService {
   URL: string = `${environment.apiUrl}/api/v1`;
 
   getAllPublicEvents(): Observable<AppRegisteredEvent[]> {
-    return this.http.get<AppRegisteredEvent[]>(`${this.URL}/others-events`);
+    return this.http.get<AppRegisteredEvent[]>(`${this.URL}/public-events`);
   }
 }
