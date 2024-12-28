@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppEvent } from '../../../types/event';
 import { environment } from '../../../../environments/environment';
+import { AppEventRequest } from '../../../types/event-all-info';
 
 @Injectable()
 export class AdminEventService {
@@ -10,8 +11,11 @@ export class AdminEventService {
 
   private URL: string = `${environment.apiUrl}/api/v1`;
 
-  createEvents(payload: AppEvent): Observable<AppEvent> {
-    return this.http.post<AppEvent>(`${this.URL}/events`, payload);
+  createEvents(payload: AppEventRequest): Observable<AppEventRequest> {
+    return this.http.post<AppEventRequest>(
+      `${this.URL}/event-all-info`,
+      payload
+    );
   }
 
   updateEvent(id: string, payload: AppEvent): Observable<AppEvent> {
