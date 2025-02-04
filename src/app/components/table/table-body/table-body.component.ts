@@ -34,15 +34,21 @@ export class TableBodyComponent {
 
   navigate(index: number, event: AppEvent, action: Action) {
     if (action === 'UPDATE') {
-      this.router.navigate(['admin', 'update'], { state: { event: event } });
+      this.router.navigate(['admin', 'update'], {
+        state: { eventId: event.event_id },
+      });
     }
 
     if (action === 'VIEW') {
-      this.router.navigate(['admin', 'view'], { state: { event: event } });
+      this.router.navigate(['admin', 'view'], {
+        state: { event: event },
+      });
     }
 
     if (action === 'DELETE') {
-      this.router.navigate(['admin', 'delete'], { state: { event: event } });
+      this.router.navigate(['admin', 'delete'], {
+        state: { event: event },
+      });
     }
 
     this.toggleActionMenu(index);
