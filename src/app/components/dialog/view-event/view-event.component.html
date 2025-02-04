@@ -1,33 +1,56 @@
 <section class="min-h-screen flex items-center bg-white dark:bg-gray-900">
     @if(event) {
     <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-        <h2 class="mb-2 text-xl font-semibold leading-none text-gray-900 md:text-2xl dark:text-white">{{event.title}}
+        <img class="rounded-lg my-4" src={{event.eventImageModel?.fileUrl}} alt="">
+        <h2 class="mb-2 text-xl font-semibold leading-none text-gray-900 md:text-2xl dark:text-white">
+            {{event.eventModel.title}}
         </h2>
         <dl>
             <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Description</dt>
             <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
-                {{event.description}}
+                {{event.eventModel.description}}
             </dd>
         </dl>
         <dl class="flex items-center space-x-6">
             <div>
                 <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Registration Opens</dt>
                 <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
-                    {{event.registration_open | date:'dd/MM/yyyy hh:mm a'}}
+                    {{event.eventModel.registration_open | date:'dd/MM/yyyy hh:mm a'}}
                 </dd>
             </div>
             <div>
                 <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Registration Closes</dt>
                 <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
-                    {{event.registration_close | date:'dd/MM/yyyy hh:mm a'}}
+                    {{event.eventModel.registration_close | date:'dd/MM/yyyy hh:mm a'}}
                 </dd>
             </div>
         </dl>
         <dl>
             <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Location</dt>
             <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
-                {{event.location_type}}
+                {{event.eventModel.location_type}}
             </dd>
+        </dl>
+        <dl>
+            <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Address</dt>
+            <div>
+                <dd class="font-light text-gray-500 dark:text-gray-400">
+                    {{event.eventAddressModel.street}}
+                </dd>
+                <dd class="font-light text-gray-500 dark:text-gray-400">
+                    {{event.eventAddressModel.city_suburb}}
+                </dd>
+                <dd class="font-light text-gray-500 dark:text-gray-400">
+                    {{event.eventAddressModel.state}}
+                </dd>
+                <dd class="font-light text-gray-500 dark:text-gray-400">
+                    {{event.eventAddressModel.postal_code}}
+                </dd>
+                <dd class="mb-4 font-light text-gray-500 dark:text-gray-400">
+                    {{event.eventAddressModel.country}}
+                </dd>
+            </div>
+
         </dl>
         <div class="flex items-center space-x-4">
             <button type="button"
