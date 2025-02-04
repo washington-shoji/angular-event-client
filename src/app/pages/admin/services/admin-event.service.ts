@@ -26,6 +26,14 @@ export class AdminEventService {
     return this.http.get<AppEvent[]>(`${this.URL}/user-events`);
   }
 
+  getUserEventsAllInfo(): Observable<AppEventRequest[]> {
+    return this.http.get<AppEventRequest[]>(`${this.URL}/user-events`);
+  }
+
+  getUserEventAllInfoById(id: string): Observable<AppEventRequest> {
+    return this.http.get<AppEventRequest>(`${this.URL}/event-all-info/${id}`);
+  }
+
   deleteEvent(id: string): Observable<void> {
     return this.http.delete<void>(`${this.URL}/events/${id}`);
   }
