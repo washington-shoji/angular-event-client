@@ -70,7 +70,7 @@ export class CreateEventComponent implements OnInit {
       },
       eventAddressModel: {
         street: this.streetControl?.value,
-        city_suburb: this.titleControl?.value,
+        city_suburb: this.citySuburbControl?.value,
         state: this.stateControl?.value,
         country: this.countryControl?.value,
         postal_code: this.postalCodeControl?.value,
