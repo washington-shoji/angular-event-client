@@ -1,6 +1,7 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { AppEvent } from '../../types/event';
+import { AppEventRequest } from '../../types/event-all-info';
 
 @Component({
   selector: 'app-public-event-card',
@@ -11,7 +12,8 @@ import { AppEvent } from '../../types/event';
   styleUrl: './public-event-card.component.scss',
 })
 export class PublicEventCardComponent {
-  event = input.required<AppEvent>();
+  event = input.required<AppEventRequest>();
+  navigated = output<void>();
 
   constructor(private datePipe: DatePipe) {}
 
@@ -39,5 +41,9 @@ export class PublicEventCardComponent {
 
   toDate(date: string) {
     return this.datePipe.transform(date);
+  }
+
+  navigate(): void {
+    this.navigated.emit();
   }
 }
