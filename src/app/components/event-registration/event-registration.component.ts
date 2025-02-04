@@ -11,10 +11,10 @@ import {
 import { ErrorAlertComponent } from '../error-alert/error-alert.component';
 import { AdminAttendeeEventService } from '../../pages/admin/services/admin-attendee-event.service';
 import { EventAttendee } from '../../types/event-attendee';
-import { AppEvent } from '../../types/event';
+import { AppEventRequest } from '../../types/event-all-info';
 
 type RouteState = {
-  event: AppEvent;
+  event: AppEventRequest;
   attendee: EventAttendee;
   navigationId: number;
 };
@@ -29,7 +29,7 @@ type RouteState = {
 })
 export class EventRegistrationComponent implements OnInit {
   eventAttendeeFrm: FormGroup;
-  event: AppEvent | undefined;
+  event: AppEventRequest | undefined;
   attendee: EventAttendee | undefined;
   submitting: boolean = false;
   errorMessage: string | undefined = undefined;
@@ -76,13 +76,13 @@ export class EventRegistrationComponent implements OnInit {
   }
 
   submit(): void {
-    if (this.eventAttendeeForm.valid && this.event?.event_id) {
+    if (this.eventAttendeeForm.valid && this.event?.eventModel?.event_id) {
       this.submitting = true;
       const formValue = this.eventAttendeeForm.value;
 
       if (!this.attendee) {
         this.adminAttendeeEventService
-          .createEventAttendee(this.event.event_id, formValue)
+          .createEventAttendee(this.event?.eventModel?.event_id, formValue)
           .pipe(take(1))
           .subscribe({
             next: () => {
@@ -98,7 +98,10 @@ export class EventRegistrationComponent implements OnInit {
           });
       } else {
         this.adminAttendeeEventService
-          .updateEventAttendee(this.event?.event_id as string, formValue)
+          .updateEventAttendee(
+            this.event?.eventModel?.event_id as string,
+            formValue
+          )
           .pipe(take(1))
           .subscribe({
             next: () => {

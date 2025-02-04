@@ -56,6 +56,41 @@
 
                     </select>
                 </div>
+                <div class="sm:col-span-2">
+                    <label for="street"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Street</label>
+                    <input type="text" name="street" id="street"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Event Street" required="" [formControl]="streetControl">
+                </div>
+                <div class="w-full">
+                    <label for="city_suburb" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">City /
+                        Suburb</label>
+                    <input type="text" name="city_suburb" id="city_suburb"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Event City / Suburb" required="" [formControl]="citySuburbControl">
+                </div>
+                <div class="w-full">
+                    <label for="state"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">State</label>
+                    <input type="text" name="state" id="state"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Event State" required="" [formControl]="stateControl">
+                </div>
+                <div class="w-full">
+                    <label for="country"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Country</label>
+                    <input type="text" name="country" id="country"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Event Country" required="" [formControl]="countryControl">
+                </div>
+                <div class="w-full">
+                    <label for="post-code" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Postal
+                        Code</label>
+                    <input type="text" name="post-code" id="post-code"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Event Post Code" required="" [formControl]="postalCodeControl">
+                </div>
             </div>
 
             <div class=" flex flex-col sm:flex-row gap-2">

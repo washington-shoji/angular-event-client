@@ -18,8 +18,8 @@ import { EventAddress } from '../../../types/event-address';
 })
 export class AddressFormComponent implements OnInit {
   eventAddress = input.required<EventAddress>();
-  submitting = input.required<boolean>();
   addressFrmData = output<FormGroup>();
+  submitting = input.required<boolean>();
   dismissed = output<boolean>();
 
   addressFrm: FormGroup;

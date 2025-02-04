@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule, Location } from '@angular/common';
+import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { AdminEventService } from '../../../pages/admin/services/admin-event.service';
 import { take } from 'rxjs';
@@ -50,7 +50,6 @@ export class DeleteEventComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: (response) => {
-          console.warn('update response', response);
           this.router.navigate(['admin', 'events']);
         },
         error: (error) => {

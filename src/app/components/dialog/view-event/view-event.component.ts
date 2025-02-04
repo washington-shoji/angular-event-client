@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { AppEventRequest } from '../../../types/event-all-info';
+import { AdminEventService } from '../../../pages/admin/services/admin-event.service';
+import { take } from 'rxjs';
 import { AppEvent } from '../../../types/event';
 
 type RouteState = {
@@ -12,14 +15,19 @@ type RouteState = {
   selector: 'app-view-event',
   standalone: true,
   imports: [CommonModule],
-  providers: [],
+  providers: [AdminEventService],
   templateUrl: './view-event.component.html',
   styleUrl: './view-event.component.scss',
 })
 export class ViewEventComponent implements OnInit {
-  event: AppEvent | undefined;
+  eventId: string | undefined;
+  event: AppEventRequest | undefined;
 
-  constructor(private router: Router, private location: Location) {}
+  constructor(
+    private router: Router,
+    private location: Location,
+    private adminEventService: AdminEventService
+  ) {}
 
   ngOnInit(): void {
     this.eventInit();
@@ -27,19 +35,36 @@ export class ViewEventComponent implements OnInit {
 
   eventInit(): void {
     const state = this.location.getState() as RouteState;
-    this.event = state.event;
+    this.eventId = state.event.event_id;
 
-    if (!state.event) {
+    if (!this.eventId) {
       this.router.navigate(['admin', 'events']);
+      return;
     }
+
+    this.adminEventService
+      .getUserEventAllInfoById(this.eventId)
+      .pipe(take(1))
+      .subscribe({
+        next: (data) => {
+          this.event = data;
+        },
+        error: (error) => {
+          console.error('Error', error);
+        },
+      });
   }
 
   navigateEdit(): void {
-    this.router.navigate(['admin', 'update'], { state: { event: this.event } });
+    this.router.navigate(['admin', 'update'], {
+      state: { eventId: this.eventId },
+    });
   }
 
   delete(): void {
-    this.router.navigate(['admin', 'delete'], { state: { event: this.event } });
+    this.router.navigate(['admin', 'delete'], {
+      state: { event: this.event },
+    });
   }
 
   dismiss(): void {

@@ -4,9 +4,9 @@ import { ErrorAlertComponent } from '../../../../components/error-alert/error-al
 import { LoadingIndicatorComponent } from '../../../../components/loading-indicator/loading-indicator.component';
 import { PublicEventService } from '../../../public-event-page/public-event.service';
 import { PrivateEventCardComponent } from '../../../../components/private-event-card/private-event-card.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AppEvent } from '../../../../types/event';
+import { Router } from '@angular/router';
 import { InfoAlertComponent } from '../../../../components/info-alert/info-alert.component';
+import { AppEventRequest } from '../../../../types/event-all-info';
 
 @Component({
   selector: 'app-all-events',
@@ -22,14 +22,13 @@ import { InfoAlertComponent } from '../../../../components/info-alert/info-alert
   providers: [PublicEventService],
 })
 export class AdminAllEventsComponent {
-  events: AppEvent[] = [];
+  events: AppEventRequest[] = [];
   loading: boolean = false;
   errorMessage: string | undefined;
 
   constructor(
     private publicEventService: PublicEventService,
-    private router: Router,
-    private route: ActivatedRoute
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.getAllEventsInit();
@@ -38,11 +37,12 @@ export class AdminAllEventsComponent {
   getAllEventsInit(): void {
     this.loading = true;
     this.publicEventService
-      .getAllPublicEvents()
+      .getAllOthersEvents()
       .pipe(take(1))
       .subscribe({
         next: (data) => {
           this.events = data;
+          console.warn('this.events', this.events);
         },
         error: (error) => {
           this.loading = false;
@@ -63,9 +63,8 @@ export class AdminAllEventsComponent {
     return;
   }
 
-  navigateToRegistration($event: AppEvent): void {
-    if ($event.event_id) {
-      console.warn('$event', $event);
+  navigateToRegistration($event: AppEventRequest): void {
+    if ($event.eventModel.event_id) {
       this.router.navigate(['admin', 'registration'], {
         state: { event: $event },
       });

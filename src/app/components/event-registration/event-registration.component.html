@@ -1,27 +1,52 @@
 <section class="min-h-screen flex items-center bg-white dark:bg-gray-900">
     @if(event) {
     <form class="py-8 px-4 mx-auto max-w-2xl lg:py-16" [formGroup]="eventAttendeeForm">
-        <h2 class="mb-2 text-xl font-semibold leading-none text-gray-900 md:text-2xl dark:text-white">{{event.title}}
+        <h2 class="mb-2 text-xl font-semibold leading-none text-gray-900 md:text-2xl dark:text-white">
+            {{event.eventModel.title}}
         </h2>
         <dl>
             <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Description</dt>
             <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
-                {{event.description}}
+                {{event.eventModel.description}}
             </dd>
         </dl>
         <dl>
             <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Location</dt>
             <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
-                {{event.location_type}}
+                {{event.eventModel.location_type}}
             </dd>
         </dl>
+
+        @if (event.eventModel.location_type === "VENUE") {
+        <dl>
+            <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Address</dt>
+            <div>
+                <dd class="font-light text-gray-500 dark:text-gray-400">
+                    {{event.eventAddressModel.street}}
+                </dd>
+                <dd class="font-light text-gray-500 dark:text-gray-400">
+                    {{event.eventAddressModel.city_suburb}}
+                </dd>
+                <dd class="font-light text-gray-500 dark:text-gray-400">
+                    {{event.eventAddressModel.state}}
+                </dd>
+                <dd class="font-light text-gray-500 dark:text-gray-400">
+                    {{event.eventAddressModel.postal_code}}
+                </dd>
+                <dd class="mb-4 font-light text-gray-500 dark:text-gray-400">
+                    {{event.eventAddressModel.country}}
+                </dd>
+            </div>
+
+        </dl>
+        }
         <dl class="flex items-center space-x-6">
             <div class="w-full">
                 <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Registration Name</dt>
                 <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
                     <input type="text" name="registration-name" id="registration-name"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="Type event location" required="" [formControl]="attendeeRegistrationNameControl">
+                        placeholder="Attendee name" required="" [formControl]="attendeeRegistrationNameControl">
                 </dd>
             </div>
             <div class="w-full">

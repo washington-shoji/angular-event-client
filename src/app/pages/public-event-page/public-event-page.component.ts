@@ -4,8 +4,9 @@ import { take } from 'rxjs';
 import { PublicEventCardComponent } from '../../components/public-event-card/public-event-card.component';
 import { LoadingIndicatorComponent } from '../../components/loading-indicator/loading-indicator.component';
 import { ErrorAlertComponent } from '../../components/error-alert/error-alert.component';
-import { AppEvent } from '../../types/event';
 import { InfoAlertComponent } from '../../components/info-alert/info-alert.component';
+import { AppEventRequest } from '../../types/event-all-info';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-public-event-page',
@@ -21,12 +22,15 @@ import { InfoAlertComponent } from '../../components/info-alert/info-alert.compo
   styleUrl: './public-event-page.component.scss',
 })
 export class PublicEventPageComponent implements OnInit {
-  events: AppEvent[] = [];
+  events: AppEventRequest[] = [];
   loading: boolean = false;
   errorMessage: string | undefined;
   errorDismissed: any;
 
-  constructor(private publicEventService: PublicEventService) {}
+  constructor(
+    private publicEventService: PublicEventService,
+    private router: Router
+  ) {}
   ngOnInit(): void {
     this.getAllEventsInit();
   }
@@ -57,5 +61,9 @@ export class PublicEventPageComponent implements OnInit {
     }
 
     return;
+  }
+
+  navigate(): void {
+    this.router.navigate(['login']);
   }
 }

@@ -12,6 +12,7 @@ import { AdminEventService } from '../../../pages/admin/services/admin-event.ser
 import { take } from 'rxjs';
 import { ErrorAlertComponent } from '../../error-alert/error-alert.component';
 import { LOCATION_TYPE } from '../../../types/event';
+import { AppEventRequest } from '../../../types/event-all-info';
 
 @Component({
   selector: 'app-create-event',
@@ -44,6 +45,11 @@ export class CreateEventComponent implements OnInit {
       registration_close: ['', Validators.required],
       event_date: ['', Validators.required],
       location_type: ['VENUE', Validators.required],
+      street: ['', Validators.required],
+      city_suburb: ['', Validators.required],
+      state: ['', Validators.required],
+      country: ['', Validators.required],
+      postal_code: ['', Validators.required],
     });
   }
 
@@ -53,9 +59,25 @@ export class CreateEventComponent implements OnInit {
 
   submit(): void {
     this.submitting = true;
-    const formValue = this.eventForm.value;
+    const appEventRequest = <AppEventRequest>{
+      eventModel: {
+        title: this.titleControl?.value,
+        description: this.descriptionControl?.value,
+        registration_open: this.registrationOpenControl?.value,
+        registration_close: this.registrationCloseControl?.value,
+        event_date: this.eventDateControl?.value,
+        location_type: this.locationTypeControl?.value,
+      },
+      eventAddressModel: {
+        street: this.streetControl?.value,
+        city_suburb: this.citySuburbControl?.value,
+        state: this.stateControl?.value,
+        country: this.countryControl?.value,
+        postal_code: this.postalCodeControl?.value,
+      },
+    };
     this.adminEventService
-      .createEvents(formValue)
+      .createEvents(appEventRequest)
       .pipe(take(1))
       .subscribe({
         next: () => {
@@ -103,5 +125,25 @@ export class CreateEventComponent implements OnInit {
 
   get locationTypeControl(): FormControl {
     return this.eventForm.get('location_type') as FormControl;
+  }
+
+  get streetControl(): FormControl {
+    return this.eventForm.get('street') as FormControl;
+  }
+
+  get citySuburbControl(): FormControl {
+    return this.eventForm.get('city_suburb') as FormControl;
+  }
+
+  get stateControl(): FormControl {
+    return this.eventForm.get('state') as FormControl;
+  }
+
+  get countryControl(): FormControl {
+    return this.eventForm.get('country') as FormControl;
+  }
+
+  get postalCodeControl(): FormControl {
+    return this.eventForm.get('postal_code') as FormControl;
   }
 }
