@@ -26,7 +26,8 @@ export const apiAdminInterceptor: HttpInterceptorFn = (
     !(
       req.url.includes('login') ||
       req.url.includes('signup') ||
-      req.url.includes('refresh-token')
+      req.url.includes('refresh-token') ||
+      req.url.includes('amazonaws.com')
     )
   ) {
     authReq = req.clone({
