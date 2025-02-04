@@ -1,12 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule, formatDate, Location } from '@angular/common';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { CommonModule, Location } from '@angular/common';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription, take } from 'rxjs';
 import { AdminEventService } from '../../../pages/admin/services/admin-event.service';
@@ -14,10 +8,14 @@ import { ErrorAlertComponent } from '../../error-alert/error-alert.component';
 import { AddressFormComponent } from '../../form/address-form/address-form.component';
 import { EventAddress } from '../../../types/event-address';
 import { AdminEventAddressService } from '../../../pages/admin/services/admin-event-address.service';
-import { AppEvent } from '../../../types/event';
+import { AdminEventImageService } from '../../../pages/admin/services/admin-event-image.service';
+import { EventImage } from '../../../types/event-image';
+import { AppEventRequest } from '../../../types/event-all-info';
+import { EventFormComponent } from '../../form/event-form/event-form.component';
 
 type RouteState = {
-  event: AppEvent;
+  eventId: string | undefined;
+  event: AppEventRequest | undefined;
   navigationId: number;
 };
 
@@ -28,33 +26,41 @@ type RouteState = {
     CommonModule,
     ReactiveFormsModule,
     ErrorAlertComponent,
+    EventFormComponent,
     AddressFormComponent,
   ],
-  providers: [AdminEventService, AdminEventAddressService],
+  providers: [
+    AdminEventService,
+    AdminEventAddressService,
+    AdminEventImageService,
+  ],
   templateUrl: './update-event.component.html',
   styleUrl: './update-event.component.scss',
 })
 export class UpdateEventComponent implements OnInit, OnDestroy {
   private _subscription: Subscription;
-  event: AppEvent | undefined;
-  eventAddress!: EventAddress;
-  eventFrm: FormGroup;
+  eventId: string | undefined;
+  event: AppEventRequest | undefined;
+  eventAddress: EventAddress | undefined;
+  eventImage: EventImage | undefined;
+  loading: boolean = false;
   submitting: boolean = false;
   errorMessage: string | undefined = undefined;
+  fileObj!: File;
+  selectedFile!: any;
+  previewFile!: string;
   constructor(
     private router: Router,
     private location: Location,
-    private formBuilder: FormBuilder,
     private adminEventService: AdminEventService,
-    private adminEventAddressService: AdminEventAddressService
+    private adminEventAddressService: AdminEventAddressService,
+    private adminEventImageService: AdminEventImageService
   ) {
     this._subscription = new Subscription();
-    this.eventFrm = new FormGroup({});
   }
 
   ngOnInit(): void {
     this.eventInit();
-    this.eventAddressInit();
   }
 
   ngOnDestroy(): void {
@@ -62,48 +68,32 @@ export class UpdateEventComponent implements OnInit, OnDestroy {
   }
 
   eventInit(): void {
+    this.loading = true;
     const state = this.location.getState() as RouteState;
-    this.event = state.event;
+    this.eventId = state.eventId;
 
-    this.eventFrm = this.formBuilder.group({
-      id: [this.event.event_id],
-      title: [this.event.title, Validators.required],
-      description: [this.event.description, Validators.required],
-      registration_open: [
-        this._convertDateTime(this.event.registration_open),
-        Validators.required,
-      ],
-      registration_close: [
-        this._convertDateTime(this.event.registration_close),
-        Validators.required,
-      ],
-      event_date: [
-        this._convertDateTime(this.event.event_date),
-        Validators.required,
-      ],
-      location_type: [this.event.location_type, Validators.required],
-    });
-  }
-
-  eventAddressInit(): void {
-    if (this.event?.event_id) {
-      this.adminEventAddressService
-        .findEventAddressByEventId(this.event.event_id)
-        .pipe(take(1))
-        .subscribe({
-          next: (response) => {
-            this.eventAddress = response;
-            //this.router.navigate(['admin', 'events']);
-          },
-          error: (error) => {
-            this.submitting = false;
-            this.errorMessage = error.errorMessage;
-          },
-          complete: () => {
-            this.submitting = false;
-          },
-        });
+    if (!this.eventId) {
+      this.router.navigate(['admin', 'events']);
+      return;
     }
+
+    this.adminEventService
+      .getUserEventAllInfoById(this.eventId)
+      .pipe(take(1))
+      .subscribe({
+        next: (data) => {
+          this.event = data;
+          this.eventAddress = this.event.eventAddressModel;
+          this.eventImage = this.event.eventImageModel;
+        },
+        error: (error) => {
+          this.loading = false;
+          console.error('Error', error);
+        },
+        complete: () => {
+          this.loading = false;
+        },
+      });
   }
 
   dismiss($event?: boolean): void {
@@ -117,12 +107,12 @@ export class UpdateEventComponent implements OnInit, OnDestroy {
     }
   }
 
-  submit(): void {
-    if (!this.eventForm.valid || !this.event?.event_id) return;
+  submit($event: FormGroup): void {
+    if (!$event?.valid || !this.event?.eventModel.event_id) return;
 
     this.submitting = true;
-    const formValue = this.eventForm.value;
-    const id = this.event?.event_id;
+    const formValue = $event?.value;
+    const id = this.event?.eventModel.event_id;
     this.adminEventService
       .updateEvent(id, formValue)
       .pipe(take(1))
@@ -141,13 +131,13 @@ export class UpdateEventComponent implements OnInit, OnDestroy {
   }
 
   submitAddress($event: FormGroup): void {
-    if ($event.valid && this.event?.event_id) {
+    if ($event.valid && this.event?.eventModel.event_id) {
       this.adminEventAddressService
-        .createEventAddress(this.event?.event_id, $event.value)
+        .createEventAddress(this.event?.eventModel.event_id, $event.value)
         .pipe(take(1))
         .subscribe({
           next: (response) => {
-            //this.router.navigate(['admin', 'events']);
+            this.router.navigate(['admin', 'events']);
           },
           error: (error) => {
             this.submitting = false;
@@ -160,35 +150,33 @@ export class UpdateEventComponent implements OnInit, OnDestroy {
     }
   }
 
-  get eventForm(): FormGroup {
-    return this.eventFrm;
+  submitPresignedImage(): void {
+    this.submitting = true;
+    if (this.eventImage?.presignedUrl) {
+      this.adminEventImageService
+        .updateImageFilePresignedUrl(this.eventImage.presignedUrl, this.fileObj)
+        .pipe(take(1))
+        .subscribe({
+          next: (response) => {
+            this.router.navigate(['admin', 'events']);
+          },
+          error: (error) => {
+            this.submitting = false;
+            this.errorMessage = error.errorMessage;
+          },
+          complete: () => {
+            this.submitting = false;
+          },
+        });
+    }
   }
 
-  get titleControl(): FormControl {
-    return this.eventForm.get('title') as FormControl;
-  }
-
-  get descriptionControl(): FormControl {
-    return this.eventForm.get('description') as FormControl;
-  }
-
-  get registrationOpenControl(): FormControl {
-    return this.eventForm.get('registration_open') as FormControl;
-  }
-
-  get registrationCloseControl(): FormControl {
-    return this.eventForm.get('registration_close') as FormControl;
-  }
-
-  get eventDateControl(): FormControl {
-    return this.eventForm.get('event_date') as FormControl;
-  }
-
-  get locationTypeControl(): FormControl {
-    return this.eventForm.get('location_type') as FormControl;
-  }
-
-  private _convertDateTime(date: string): string {
-    return formatDate(date, 'yyyy-MM-ddTHH:mm', 'en');
+  onFileSelected($event: Event): void {
+    const input = $event?.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) {
+      return; // No file selected
+    }
+    this.fileObj = input.files[0];
+    this.previewFile = URL.createObjectURL(this.fileObj);
   }
 }

@@ -1,55 +1,47 @@
 <section class="bg-white dark:bg-gray-900">
-    @if (!errorMessage) {
+    @if (!loading || !errorMessage && event?.eventModel) {
     <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
         <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Update event</h2>
+        <app-event-form [event]="event?.eventModel" [submitting]="submitting" (eventFrmData)="submit($event)"
+            (dismissed)="dismiss($event)">
+        </app-event-form>
+    </div>
+    }
+
+    @if(errorMessage) {
+    <app-error-alert [errorMessage]="errorMessage" (dismissClick)="dismissError($event)"></app-error-alert>
+    }
+
+    @if(event?.eventModel?.location_type === 'VENUE' && this.eventAddress && !loading) {
+    <div class="py-4 px-4 mx-auto max-w-2xl">
+        <app-address-form [eventAddress]="eventAddress" [submitting]="submitting"
+            (addressFrmData)="submitAddress($event)" (dismissed)="dismiss($event)">
+        </app-address-form>
+    </div>
+    }
+
+    @if(!loading || !errorMessage) {
+    <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
+        <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Update event image</h2>
         <form action="#">
-            <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
-                <div class="sm:col-span-2">
-                    <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event
-                        Title</label>
-                    <input type="text" name="title" id="title"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="Type event title" required="" [formControl]="titleControl">
-                </div>
-                <div class="sm:col-span-2">
-                    <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event
-                        Description</label>
-                    <textarea id="description" rows="8"
-                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="Your description here" [formControl]="descriptionControl"></textarea>
-                </div>
-                <div class="w-full">
-                    <label for="registration-open"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Registration
-                        Open</label>
-                    <input type="datetime-local" name="registration-open" id="registration-open"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="Event registration open" required="" [formControl]="registrationOpenControl">
-                </div>
-                <div class="w-full">
-                    <label for="registration-close"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event
-                        Close</label>
-                    <input type="datetime-local" name="registration-close" id="registration-close"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="Event registration close" required="" [formControl]="registrationCloseControl">
-                </div>
-                <div class="w-full">
-                    <label for="event-date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event
-                        Date</label>
-                    <input type="datetime-local" name="event-date" id="event-date"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="Event day" required="" [formControl]="eventDateControl">
-                </div>
-                <div class="w-full">
-                    <label for="event-location-type"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event
-                        Location Type</label>
-                    <input type="text" name="event-location-type" id="event-location-type"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="Event location type" required="" [formControl]="locationTypeControl">
-                </div>
+            <div class="flex items-center justify-center w-full">
+                <label for="dropzone-file"
+                    class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500">
+                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                        <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                        </svg>
+                        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to
+                                upload</span> or drag and drop</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                    </div>
+                    <input id="dropzone-file" type="file" class="hidden" [multiple]="false"
+                        (change)="onFileSelected($event)" />
+                </label>
             </div>
+            <img class="rounded-lg my-4" src={{previewFile}} alt="">
             <div class=" flex flex-col sm:flex-row gap-2">
                 <button type="submit"
                     class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
@@ -60,8 +52,8 @@
                 @if (!submitting) {
                 <button type="button"
                     class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
-                    (click)="submit()">
-                    Update event
+                    (click)="submitPresignedImage()">
+                    Update event image
                 </button>
                 }
 
@@ -82,18 +74,6 @@
                 }
             </div>
         </form>
-    </div>
-    }
-
-    @if(errorMessage) {
-    <app-error-alert [errorMessage]="errorMessage" (dismissClick)="dismissError($event)"></app-error-alert>
-    }
-
-    @if(event?.location_type === 'VENUE' && this.eventAddress) {
-    <div class="py-4 px-4 mx-auto max-w-2xl">
-        <app-address-form [eventAddress]="eventAddress" [submitting]="submitting"
-            (addressFrmData)="submitAddress($event)" (dismissed)="dismiss($event)">
-        </app-address-form>
     </div>
     }
 
