@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
-import { EventImage } from '../../../types/event-image';
+import { EventImageModel } from '../../../types/event-image';
 
 @Injectable()
 export class AdminEventImageService {
@@ -10,8 +10,10 @@ export class AdminEventImageService {
 
   private URL: string = `${environment.apiUrl}/api/v1`;
 
-  findEventImageByEventId(eventId: string): Observable<EventImage> {
-    return this.http.get<EventImage>(`${this.URL}/event-id-image/${eventId}`);
+  findEventImageByEventId(eventId: string): Observable<EventImageModel> {
+    return this.http.get<EventImageModel>(
+      `${this.URL}/event-id-image/${eventId}`
+    );
   }
 
   updateImageFilePresignedUrl(

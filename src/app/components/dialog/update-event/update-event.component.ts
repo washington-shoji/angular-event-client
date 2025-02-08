@@ -9,7 +9,7 @@ import { AddressFormComponent } from '../../form/address-form/address-form.compo
 import { EventAddress } from '../../../types/event-address';
 import { AdminEventAddressService } from '../../../pages/admin/services/admin-event-address.service';
 import { AdminEventImageService } from '../../../pages/admin/services/admin-event-image.service';
-import { EventImage } from '../../../types/event-image';
+import { EventImageModel } from '../../../types/event-image';
 import { AppEventRequest } from '../../../types/event-all-info';
 import { EventFormComponent } from '../../form/event-form/event-form.component';
 
@@ -42,7 +42,7 @@ export class UpdateEventComponent implements OnInit, OnDestroy {
   eventId: string | undefined;
   event: AppEventRequest | undefined;
   eventAddress: EventAddress | undefined;
-  eventImage: EventImage | undefined;
+  eventImage: EventImageModel | undefined;
   loading: boolean = false;
   submitting: boolean = false;
   errorMessage: string | undefined = undefined;

@@ -25,6 +25,7 @@ export class EventRegisteredViewComponent implements OnInit {
 
   registeredEventInit(): void {
     const state = this.location.getState() as RouteState;
+    console.warn('state', state);
     this.registeredEvent = state.registeredEvent;
 
     if (!state.registeredEvent) {
