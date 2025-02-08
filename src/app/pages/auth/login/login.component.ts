@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
         },
         error: (error) => {
           this.submitting = false;
-          this.errorMessage = error.errorMessage;
+          this.errorMessage = error.message;
         },
         complete: () => {
           this.submitting = false;

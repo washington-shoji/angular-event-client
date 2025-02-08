@@ -12,6 +12,8 @@ import { AdminEventImageService } from '../../../pages/admin/services/admin-even
 import { EventImageModel } from '../../../types/event-image';
 import { AppEventRequest } from '../../../types/event-all-info';
 import { EventFormComponent } from '../../form/event-form/event-form.component';
+import { LoadingIndicatorComponent } from '../../loading-indicator/loading-indicator.component';
+import { ImageFormComponent } from '../../form/image-form/image-form.component';
 
 type RouteState = {
   eventId: string | undefined;
@@ -28,6 +30,8 @@ type RouteState = {
     ErrorAlertComponent,
     EventFormComponent,
     AddressFormComponent,
+    LoadingIndicatorComponent,
+    ImageFormComponent,
   ],
   providers: [
     AdminEventService,
@@ -46,9 +50,7 @@ export class UpdateEventComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   submitting: boolean = false;
   errorMessage: string | undefined = undefined;
-  fileObj!: File;
-  selectedFile!: any;
-  previewFile!: string;
+
   constructor(
     private router: Router,
     private location: Location,
@@ -88,6 +90,7 @@ export class UpdateEventComponent implements OnInit, OnDestroy {
         },
         error: (error) => {
           this.loading = false;
+          this.errorMessage = error?.message;
           console.error('Error', error);
         },
         complete: () => {
@@ -150,11 +153,11 @@ export class UpdateEventComponent implements OnInit, OnDestroy {
     }
   }
 
-  submitPresignedImage(): void {
+  submitPresignedImage($event: File): void {
     this.submitting = true;
     if (this.eventImage?.presignedUrl) {
       this.adminEventImageService
-        .updateImageFilePresignedUrl(this.eventImage.presignedUrl, this.fileObj)
+        .updateImageFilePresignedUrl(this.eventImage.presignedUrl, $event)
         .pipe(take(1))
         .subscribe({
           next: (response) => {
@@ -169,14 +172,5 @@ export class UpdateEventComponent implements OnInit, OnDestroy {
           },
         });
     }
-  }
-
-  onFileSelected($event: Event): void {
-    const input = $event?.target as HTMLInputElement;
-    if (!input.files || input.files.length === 0) {
-      return; // No file selected
-    }
-    this.fileObj = input.files[0];
-    this.previewFile = URL.createObjectURL(this.fileObj);
   }
 }

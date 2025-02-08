@@ -90,7 +90,7 @@ export class EventRegistrationComponent implements OnInit {
             },
             error: (error) => {
               this.submitting = false;
-              this.errorMessage = error.errorMessage;
+              this.errorMessage = error.message;
             },
             complete: () => {
               this.submitting = false;
@@ -109,7 +109,7 @@ export class EventRegistrationComponent implements OnInit {
             },
             error: (error) => {
               this.submitting = false;
-              this.errorMessage = error.errorMessage;
+              this.errorMessage = error.message;
             },
             complete: () => {
               this.submitting = false;

@@ -48,7 +48,7 @@ export class AdminAttendingEventsComponent implements OnInit {
         },
         error: (error) => {
           this.loading = false;
-          this.errorMessage = error.errorMessage;
+          this.errorMessage = error.message;
         },
         complete: () => {
           this.loading = false;
