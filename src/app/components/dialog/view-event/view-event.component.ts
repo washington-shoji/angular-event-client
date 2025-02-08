@@ -5,6 +5,8 @@ import { AppEventRequest } from '../../../types/event-all-info';
 import { AdminEventService } from '../../../pages/admin/services/admin-event.service';
 import { take } from 'rxjs';
 import { AppEvent } from '../../../types/event';
+import { ErrorAlertComponent } from '../../error-alert/error-alert.component';
+import { LoadingIndicatorComponent } from '../../loading-indicator/loading-indicator.component';
 
 type RouteState = {
   event: AppEvent;
@@ -14,7 +16,7 @@ type RouteState = {
 @Component({
   selector: 'app-view-event',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ErrorAlertComponent, LoadingIndicatorComponent],
   providers: [AdminEventService],
   templateUrl: './view-event.component.html',
   styleUrl: './view-event.component.scss',
@@ -22,6 +24,8 @@ type RouteState = {
 export class ViewEventComponent implements OnInit {
   eventId: string | undefined;
   event: AppEventRequest | undefined;
+  loading: boolean = false;
+  errorMessage: string | undefined = undefined;
 
   constructor(
     private router: Router,
@@ -42,6 +46,7 @@ export class ViewEventComponent implements OnInit {
       return;
     }
 
+    this.loading = true;
     this.adminEventService
       .getUserEventAllInfoById(this.eventId)
       .pipe(take(1))
@@ -50,7 +55,12 @@ export class ViewEventComponent implements OnInit {
           this.event = data;
         },
         error: (error) => {
+          this.loading = false;
+          this.errorMessage = error.message;
           console.error('Error', error);
+        },
+        complete: () => {
+          this.loading = false;
         },
       });
   }
@@ -69,5 +79,12 @@ export class ViewEventComponent implements OnInit {
 
   dismiss(): void {
     this.router.navigate(['admin', 'events']);
+  }
+
+  dismissError($event: boolean) {
+    if ($event) {
+      this.errorMessage = undefined;
+      this.eventInit();
+    }
   }
 }
